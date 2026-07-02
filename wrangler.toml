@@ -1,6 +1,7 @@
 name = "instituto-civitas-solis-site"
+account_id = "5dabde9fe53e380526be98a893978bf5"
 compatibility_date = "2026-07-02"
 
 [assets]
-directory = "./"
+directory = "./dist"
 not_found_handling = "single-page-application"

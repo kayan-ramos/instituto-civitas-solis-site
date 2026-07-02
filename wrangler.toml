@@ -1,0 +1,6 @@
+name = "instituto-civitas-solis-site"
+compatibility_date = "2026-07-02"
+
+[assets]
+directory = "./"
+not_found_handling = "single-page-application"

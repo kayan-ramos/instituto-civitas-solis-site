@@ -352,22 +352,37 @@ Meu telefone para retorno é: `})},3500))},d=h=>{const{name:v,value:y}=h.target;
     [...section.querySelectorAll("h2")].filter(h=>has(h.innerText,["Parceria Internacional","International Partnership","Partenariat International","Alianza Internacional","Internationale Partnerschaft","Partnership Internazionale"])).forEach(h=>(h.closest(".max-w-4xl")||h).remove());
   };
 
+  const mvvTitleTerms=["Missão, Visão e Valores","Mission, Vision","Mission, Vision et Valeurs","Misión, Visión","Mission, Vision und Werte","Missione, Visione"];
+  const isMvvPage=()=>location.pathname==="/missao-visao-valores"||byHeading(mvvTitleTerms);
+  const removeIconBubble=el=>{
+    if(!el)return;
+    const bubble=el.closest(".inline-flex,.flex,.rounded-full")||el.parentElement;
+    const target=bubble&&bubble.querySelector&&bubble.querySelector("svg")?bubble:el;
+    if(target&&target.parentNode)target.parentNode.removeChild(target);
+  };
   const fixMvvHero=()=>{
-    const hero=byHeading(["Missão, Visão e Valores","Mission, Vision and Values","Mission, Vision et Valeurs","Misión, Visión y Valores","Mission, Vision und Werte","Missione, Visione e Valori"]);
-    if(hero)hero.querySelectorAll("svg").forEach(svg=>svg.remove());
+    if(!isMvvPage())return;
+    const hero=byHeading(mvvTitleTerms);
+    if(hero)hero.querySelectorAll("svg").forEach(removeIconBubble);
   };
   const fixMissionVision=()=>{
+    if(!isMvvPage())return;
     [...document.querySelectorAll("h2")].filter(h=>has(h.innerText,["Nossa Missão","Nossa Visão","Our Mission","Our Vision","Notre Mission","Notre Vision","Nuestra Misión","Nuestra Visión","Unsere Mission","Unsere Vision","La Nostra Missione","La Nostra Visione"])).forEach(h=>{
       const row=h.closest(".flex.items-center");
-      if(row)row.querySelectorAll("svg").forEach(svg=>svg.remove());
+      if(row)row.querySelectorAll("svg").forEach(removeIconBubble);
+      h.classList.add("ics-mvv-heading-no-icon");
     });
   };
-  const fixValues=()=>document.querySelectorAll(".values-constellation").forEach(el=>el.classList.add("ics-values-spaced"));
+  const fixValues=()=>{
+    if(!isMvvPage())return;
+    document.querySelectorAll(".values-constellation").forEach(el=>el.classList.add("ics-values-spaced"));
+  };
   const fixYouTube=()=>{
     document.querySelectorAll(".youtube-hero h1").forEach(el=>el.classList.add("ics-youtube-title"));
     document.querySelectorAll(".youtube-hero p").forEach(el=>el.classList.add("ics-youtube-subtitle"));
   };
-  const apply=()=>{ensureVideo();ensureGlobal();fixMvvHero();fixMissionVision();fixValues();fixYouTube()};
+  const safe=fn=>{try{fn()}catch(error){}};
+  const apply=()=>{safe(fixValues);safe(fixMvvHero);safe(fixMissionVision);safe(ensureVideo);safe(ensureGlobal);safe(fixYouTube)};
   const schedule=()=>{clearTimeout(window.__icsHomeAdjustTimer);window.__icsHomeAdjustTimer=setTimeout(apply,120)};
   window.__icsHomeApply=apply;
   document.addEventListener("DOMContentLoaded",schedule);

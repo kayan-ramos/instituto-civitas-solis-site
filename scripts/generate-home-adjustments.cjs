@@ -3,9 +3,9 @@ const path = require("path");
 
 const root = process.cwd();
 const inputName = "index-i18n-stable-8f6c2d1.js";
-const outputName = "index-mvv-layout-7e8c54f.js";
-const cssOutputName = "index-mvv-layout-7e8c54f.css";
-const revision = "mvv-layout-2026-08-31";
+const outputName = "index-mvv-titlefix-4b91d6c.js";
+const cssOutputName = "index-mvv-titlefix-4b91d6c.css";
+const revision = "mvv-titlefix-2026-08-31";
 const logoUrl = "https://cdn.awsli.com.br/436/436130/favicon/f0c196521f.png";
 
 const input = path.join(root, "assets", inputName);
@@ -196,8 +196,8 @@ const runtime = `;(()=>{
   const isMvvPage=()=>location.pathname==="/missao-visao-valores"||byHeading(mvvTitleTerms);
   const removeIconBubble=el=>{
     if(!el)return;
-    const bubble=el.closest(".inline-flex,.flex,.rounded-full")||el.parentElement;
-    const target=bubble&&bubble.querySelector&&bubble.querySelector("svg")?bubble:el;
+    const bubble=el.closest(".inline-flex.rounded-full,.rounded-full");
+    const target=bubble&&bubble.querySelector&&bubble.querySelector("svg")&&!bubble.querySelector("h1,h2,h3,p")?bubble:el;
     if(target&&target.parentNode)target.parentNode.removeChild(target);
   };
   const fixMvvHero=()=>{

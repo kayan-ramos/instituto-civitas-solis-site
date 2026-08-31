@@ -356,8 +356,8 @@ Meu telefone para retorno é: `})},3500))},d=h=>{const{name:v,value:y}=h.target;
   const isMvvPage=()=>location.pathname==="/missao-visao-valores"||byHeading(mvvTitleTerms);
   const removeIconBubble=el=>{
     if(!el)return;
-    const bubble=el.closest(".inline-flex,.flex,.rounded-full")||el.parentElement;
-    const target=bubble&&bubble.querySelector&&bubble.querySelector("svg")?bubble:el;
+    const bubble=el.closest(".inline-flex.rounded-full,.rounded-full");
+    const target=bubble&&bubble.querySelector&&bubble.querySelector("svg")&&!bubble.querySelector("h1,h2,h3,p")?bubble:el;
     if(target&&target.parentNode)target.parentNode.removeChild(target);
   };
   const fixMvvHero=()=>{

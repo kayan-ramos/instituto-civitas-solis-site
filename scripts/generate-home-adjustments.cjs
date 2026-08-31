@@ -3,9 +3,9 @@ const path = require("path");
 
 const root = process.cwd();
 const inputName = "index-i18n-stable-8f6c2d1.js";
-const outputName = "index-home-review-2f7a91c.js";
-const cssOutputName = "index-home-review-2f7a91c.css";
-const revision = "home-review-2026-08-31";
+const outputName = "index-cachefix-6e4c2d0.js";
+const cssOutputName = "index-cachefix-6e4c2d0.css";
+const revision = "cachefix-2026-08-31";
 
 const input = path.join(root, "assets", inputName);
 const outputAssets = path.join(root, "assets", outputName);
@@ -21,6 +21,18 @@ const replacements = [
   [
     "Tornar-se referência no cenário nacional e iniciar a internacionalização com a realização de atividades que propiciem o desenvolvimento integral do ser humano, em seu aspecto individual e coletivo. Ser um polo atrator para especialistas e formadores de opinião para um diálogo aberto entre visões distintas, visando a colaboração construtiva.",
     "Tornar-se referência cultural por meio da realização de atividades que propiciem o desenvolvimento integral do ser humano."
+  ],
+  [
+    'children:"Visão Planetária"',
+    'children:"PUBLICAÇÕES"'
+  ],
+  [
+    'children:"Parcerias"',
+    'children:"DIÁLOGOS"'
+  ],
+  [
+    'children:"Educação Holística"',
+    'children:"PARCERIAS"'
   ]
 ];
 

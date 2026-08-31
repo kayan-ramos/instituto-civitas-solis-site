@@ -3,9 +3,10 @@ const path = require("path");
 
 const root = process.cwd();
 const inputName = "index-i18n-stable-8f6c2d1.js";
-const outputName = "index-cardfix-91b7d8a.js";
-const cssOutputName = "index-cardfix-91b7d8a.css";
-const revision = "cardfix-2026-08-31";
+const outputName = "index-logofix-a84d9c2.js";
+const cssOutputName = "index-logofix-a84d9c2.css";
+const revision = "logofix-2026-08-31";
+const logoUrl = "https://cdn.awsli.com.br/436/436130/favicon/f0c196521f.png";
 
 const input = path.join(root, "assets", inputName);
 const outputAssets = path.join(root, "assets", outputName);
@@ -21,6 +22,10 @@ const replacements = [
   [
     "Tornar-se referência no cenário nacional e iniciar a internacionalização com a realização de atividades que propiciem o desenvolvimento integral do ser humano, em seu aspecto individual e coletivo. Ser um polo atrator para especialistas e formadores de opinião para um diálogo aberto entre visões distintas, visando a colaboração construtiva.",
     "Tornar-se referência cultural por meio da realização de atividades que propiciem o desenvolvimento integral do ser humano."
+  ],
+  [
+    "https://www.civitassolis.org.br/wp-content/uploads/2016/11/cropped-Screen-Shot-2014-05-05-at-1.04.44-AM-180x180.png",
+    logoUrl
   ],
   [
     'children:"Visão Planetária"',
@@ -233,6 +238,7 @@ for (const htmlPath of [path.join(root, "index.html"), path.join(root, "dist", "
   let html = fs.readFileSync(htmlPath, "utf8");
   html = html
     .replace(/(<meta name="deploy-revision" content=")[^"]*(" \/>)/, `$1${revision}$2`)
+    .replace(/(<link rel="icon" type="image\/png" href=")[^"]*(" \/>)/, `$1${logoUrl}$2`)
     .replace(/\/assets\/index-[^"]+\.js/, `/assets/${outputName}`)
     .replace(/\/assets\/index-[^"]+\.css/, `/assets/${cssOutputName}`);
   fs.writeFileSync(htmlPath, html);

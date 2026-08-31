@@ -3,9 +3,9 @@ const path = require("path");
 
 const root = process.cwd();
 const inputName = "index-i18n-stable-8f6c2d1.js";
-const outputName = "index-cachefix-6e4c2d0.js";
-const cssOutputName = "index-cachefix-6e4c2d0.css";
-const revision = "cachefix-2026-08-31";
+const outputName = "index-cardfix-91b7d8a.js";
+const cssOutputName = "index-cardfix-91b7d8a.css";
+const revision = "cardfix-2026-08-31";
 
 const input = path.join(root, "assets", inputName);
 const outputAssets = path.join(root, "assets", outputName);
@@ -111,7 +111,8 @@ const runtime = `;(()=>{
 
   const baseItems=copy.pt.items;
   const localized=()=>{const lang=copy[currentLang()]?currentLang():"pt";return {lang,more:copy[lang].more,close:copy[lang].close,items:baseItems.map((base,index)=>({...base,...copy[lang].items[index],keys:base.keys,images:base.images}))}};
-  const cardFor=(section,item)=>[...section.querySelectorAll("div")].find(el=>{const h=el.querySelector("h3");return h&&item.keys.some(key=>normalize(h.innerText)===key)});
+  const clearBadCardMarks=section=>[...section.querySelectorAll(".ics-global-card")].forEach(el=>{const directTitle=[...el.children].find(child=>child.tagName==="H3");if(!directTitle){el.classList.remove("ics-global-card","ics-global-selected");el.removeAttribute("data-ics-global-card")}});
+  const cardFor=(section,item)=>[...section.querySelectorAll("div")].find(el=>{const h=[...el.children].find(child=>child.tagName==="H3");return h&&item.keys.some(key=>normalize(h.innerText)===key)});
   const panelHtml=item=>'<div class="ics-global-panel-media">'+item.images.map(src=>'<img src="'+src+'" alt="'+item.title+'">').join("")+'</div><div class="ics-global-panel-copy"><h3>'+item.title+'</h3><p>'+item.detail+'</p></div>';
 
   const ensureVideo=()=>{
@@ -128,6 +129,7 @@ const runtime = `;(()=>{
     if(!section)return;
     const data=localized();
     section.setAttribute("id","trabalho-global");
+    clearBadCardMarks(section);
     const cards=data.items.map((item,index)=>{
       const card=cardFor(section,item);
       if(!card)return null;

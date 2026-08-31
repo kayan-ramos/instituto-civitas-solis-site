@@ -276,7 +276,8 @@ Meu telefone para retorno é: `})},3500))},d=h=>{const{name:v,value:y}=h.target;
 
   const baseItems=copy.pt.items;
   const localized=()=>{const lang=copy[currentLang()]?currentLang():"pt";return {lang,more:copy[lang].more,close:copy[lang].close,items:baseItems.map((base,index)=>({...base,...copy[lang].items[index],keys:base.keys,images:base.images}))}};
-  const cardFor=(section,item)=>[...section.querySelectorAll("div")].find(el=>{const h=el.querySelector("h3");return h&&item.keys.some(key=>normalize(h.innerText)===key)});
+  const clearBadCardMarks=section=>[...section.querySelectorAll(".ics-global-card")].forEach(el=>{const directTitle=[...el.children].find(child=>child.tagName==="H3");if(!directTitle){el.classList.remove("ics-global-card","ics-global-selected");el.removeAttribute("data-ics-global-card")}});
+  const cardFor=(section,item)=>[...section.querySelectorAll("div")].find(el=>{const h=[...el.children].find(child=>child.tagName==="H3");return h&&item.keys.some(key=>normalize(h.innerText)===key)});
   const panelHtml=item=>'<div class="ics-global-panel-media">'+item.images.map(src=>'<img src="'+src+'" alt="'+item.title+'">').join("")+'</div><div class="ics-global-panel-copy"><h3>'+item.title+'</h3><p>'+item.detail+'</p></div>';
 
   const ensureVideo=()=>{
@@ -293,6 +294,7 @@ Meu telefone para retorno é: `})},3500))},d=h=>{const{name:v,value:y}=h.target;
     if(!section)return;
     const data=localized();
     section.setAttribute("id","trabalho-global");
+    clearBadCardMarks(section);
     const cards=data.items.map((item,index)=>{
       const card=cardFor(section,item);
       if(!card)return null;

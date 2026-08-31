@@ -1,4 +1,19 @@
-/*
+/
+  Cache-Control: no-store, max-age=0
+
+/missao-visao-valores
+  Cache-Control: no-store, max-age=0
+
+/youtube
+  Cache-Control: no-store, max-age=0
+
+/instagram
+  Cache-Control: no-store, max-age=0
+
+/contato
+  Cache-Control: no-store, max-age=0
+
+/trabalho-global
   Cache-Control: no-store, max-age=0
 
 /assets/*

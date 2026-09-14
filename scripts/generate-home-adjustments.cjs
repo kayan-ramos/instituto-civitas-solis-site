@@ -3,9 +3,9 @@ const path = require("path");
 
 const root = process.cwd();
 const inputName = "index-i18n-stable-8f6c2d1.js";
-const outputName = "index-youtube-about-removed-9c1d5b.js";
-const cssOutputName = "index-youtube-about-removed-9c1d5b.css";
-const revision = "youtube-about-removed-2026-09-14";
+const outputName = "index-icon-flicker-fix-f1e9a7.js";
+const cssOutputName = "index-icon-flicker-fix-f1e9a7.css";
+const revision = "icon-flicker-fix-3-2026-09-14";
 const logoUrl = "https://cdn.awsli.com.br/436/436130/favicon/f0c196521f.png";
 
 const input = path.join(root, "assets", inputName);
@@ -57,6 +57,14 @@ for (const [from, to] of replacements) {
   source = source.split(from).join(to);
 }
 
+source = source.replace(
+  'const updateLanguageButton=lang=>{const meta=langMeta[lang]||langMeta.pt;document.querySelectorAll("button").forEach(button=>{const spans=[...button.querySelectorAll("span")];const labels=spans.map(s=>s.textContent.trim());const looksLikeToggle=button.querySelector("svg")&&labels.some(v=>Object.values(langMeta).some(m=>v===m.name||v===m.code));if(looksLikeToggle&&spans.length>=2){spans[0].textContent=meta.code;spans[1].textContent=meta.name}});document.querySelectorAll("button").forEach(button=>{const text=button.textContent.trim();const entry=Object.entries(langMeta).find(([,m])=>text.includes(m.name));if(entry){button.setAttribute("aria-pressed",entry[0]===lang?"true":"false");button.classList.toggle("ics-language-active",entry[0]===lang)}})};',
+  'const setTextIfChanged=(el,value)=>{if(el&&el.textContent!==value)el.textContent=value};const setAttrIfChanged=(el,name,value)=>{if(el&&el.getAttribute(name)!==value)el.setAttribute(name,value)};const updateLanguageButton=lang=>{const meta=langMeta[lang]||langMeta.pt;document.querySelectorAll("button").forEach(button=>{const spans=[...button.querySelectorAll("span")];const labels=spans.map(s=>s.textContent.trim());const looksLikeToggle=button.querySelector("svg")&&labels.some(v=>Object.values(langMeta).some(m=>v===m.name||v===m.code));if(looksLikeToggle&&spans.length>=2){setTextIfChanged(spans[0],meta.code);setTextIfChanged(spans[1],meta.name)}});document.querySelectorAll("button").forEach(button=>{const text=button.textContent.trim();const entry=Object.entries(langMeta).find(([,m])=>text.includes(m.name));if(entry){setAttrIfChanged(button,"aria-pressed",entry[0]===lang?"true":"false");button.classList.toggle("ics-language-active",entry[0]===lang)}})};'
+);
+source = source.replace(
+  'const apply=()=>{const lang=normalizeLang();document.documentElement.lang=lang==="pt"?"pt-BR":lang;textNodes(document.body).forEach(node=>{const current=node.nodeValue;const translated=translateString(current,lang);if(translated!==current)node.nodeValue=preserve(current,translated)});translateAttributes(lang);translateValues(lang);updateLanguageButton(lang)};const schedule=()=>{clearTimeout(window.__icsTranslateTimer);window.__icsTranslateTimer=setTimeout(apply,50)};',
+  'let __icsTranslating=false;const apply=()=>{if(__icsTranslating)return;__icsTranslating=true;try{const lang=normalizeLang();const htmlLang=lang==="pt"?"pt-BR":lang;if(document.documentElement.lang!==htmlLang)document.documentElement.lang=htmlLang;textNodes(document.body).forEach(node=>{const current=node.nodeValue;const translated=translateString(current,lang);const next=preserve(current,translated);if(next!==current)node.nodeValue=next});translateAttributes(lang);translateValues(lang);updateLanguageButton(lang)}finally{setTimeout(()=>{__icsTranslating=false},0)}};const schedule=()=>{if(__icsTranslating)return;clearTimeout(window.__icsTranslateTimer);window.__icsTranslateTimer=setTimeout(apply,50)};'
+);
 const hook = "Wd(document.getElementById(\"root\")).render";
 const hookIndex = source.indexOf(hook);
 if (hookIndex < 0) throw new Error("Could not find React render hook.");
@@ -223,12 +231,12 @@ const runtime = `;(()=>{
     [...document.querySelectorAll("h2")].filter(h=>has(h.innerText,["Nossa Missão","Nossa Visão","Our Mission","Our Vision","Notre Mission","Notre Vision","Nuestra Misión","Nuestra Visión","Unsere Mission","Unsere Vision","La Nostra Missione","La Nostra Visione"])).forEach(h=>{
       const row=h.closest(".flex.items-center");
       if(row)row.querySelectorAll("svg").forEach(removeIconBubble);
-      h.classList.add("ics-mvv-heading-no-icon");
+      if(!h.classList.contains("ics-mvv-heading-no-icon"))h.classList.add("ics-mvv-heading-no-icon");
     });
   };
   const fixValues=()=>{
     if(!isMvvPage())return;
-    document.querySelectorAll(".values-constellation").forEach(el=>el.classList.add("ics-values-spaced"));
+    document.querySelectorAll(".values-constellation").forEach(el=>{if(!el.classList.contains("ics-values-spaced"))el.classList.add("ics-values-spaced")});
   };
   const fixHomeYouTube=()=>{
     const section=byHeading(["Nosso YouTube","Our YouTube","Nuestro YouTube","Notre YouTube","Unser YouTube","Il Nostro YouTube"]);
@@ -237,12 +245,12 @@ const runtime = `;(()=>{
   };
 
   const fixYouTube=()=>{
-    document.querySelectorAll(".youtube-hero h1").forEach(el=>el.classList.add("ics-youtube-title"));
-    document.querySelectorAll(".youtube-hero p").forEach(el=>el.classList.add("ics-youtube-subtitle"));
+    document.querySelectorAll(".youtube-hero h1").forEach(el=>{if(!el.classList.contains("ics-youtube-title"))el.classList.add("ics-youtube-title")});
+    document.querySelectorAll(".youtube-hero p").forEach(el=>{if(!el.classList.contains("ics-youtube-subtitle"))el.classList.add("ics-youtube-subtitle")});
     document.querySelectorAll(".youtube-about").forEach(el=>el.remove());
   };
   const safe=fn=>{try{fn()}catch(error){}};
-  const apply=()=>{document.documentElement.classList.toggle("ics-route-mvv",isMvvPage());safe(fixValues);safe(fixMvvHero);safe(fixMissionVision);safe(ensureVideo);safe(ensureGlobal);safe(fixHomeYouTube);safe(fixYouTube)};
+  const apply=()=>{document.documentElement.classList.toggle("ics-route-mvv",location.pathname==="/missao-visao-valores");safe(fixValues);safe(fixMvvHero);safe(fixMissionVision);safe(ensureVideo);safe(ensureGlobal);safe(fixHomeYouTube);safe(fixYouTube)};
   const schedule=()=>{clearTimeout(window.__icsHomeAdjustTimer);window.__icsHomeAdjustTimer=setTimeout(apply,120)};
   window.__icsHomeApply=apply;
   document.addEventListener("DOMContentLoaded",schedule);
@@ -288,6 +296,9 @@ for (const htmlPath of [path.join(root, "index.html"), path.join(root, "dist", "
 }
 
 console.log(outputName);
+
+
+
 
 
 

@@ -3,9 +3,9 @@ const path = require("path");
 
 const root = process.cwd();
 const inputName = "index-i18n-stable-8f6c2d1.js";
-const outputName = "index-mvv-cache-values-f3b8a1.js";
-const cssOutputName = "index-mvv-cache-values-f3b8a1.css";
-const revision = "mvv-cache-values-2026-09-14";
+const outputName = "index-youtube-copy-4a9e2c.js";
+const cssOutputName = "index-youtube-copy-4a9e2c.css";
+const revision = "youtube-copy-2026-09-14";
 const logoUrl = "https://cdn.awsli.com.br/436/436130/favicon/f0c196521f.png";
 
 const input = path.join(root, "assets", inputName);
@@ -38,6 +38,10 @@ const replacements = [
   [
     'children:"Educação Holística"',
     'children:"PARCERIAS"'
+  ],
+  [
+    "Conteúdos sobre filosofia, cultura e espiritualidade para uma nova consciência planetária",
+    "Explore nosso canal no YouTube, dedicado à disseminação de conhecimentos sobre Arte, Espiritualidade e Ciência, visando o desenvolvimento integral do ser humano."
   ],
   [
     "Fundado com o propósito de promover a síntese entre ciência, arte e espiritualidade, nosso instituto busca contribuir para o despertar de uma nova consciência planetária, baseada na sabedoria ancestral e nas descobertas contemporâneas.",
@@ -283,6 +287,7 @@ for (const htmlPath of [path.join(root, "index.html"), path.join(root, "dist", "
 }
 
 console.log(outputName);
+
 
 
 

@@ -3,9 +3,9 @@ const path = require("path");
 
 const root = process.cwd();
 const inputName = "index-i18n-stable-8f6c2d1.js";
-const outputName = "index-instagram-copy-6e2b4c.js";
-const cssOutputName = "index-instagram-copy-6e2b4c.css";
-const revision = "instagram-copy-2026-09-14";
+const outputName = "index-instagram-widget-restore-1f7d9a.js";
+const cssOutputName = "index-instagram-widget-restore-1f7d9a.css";
+const revision = "instagram-widget-restore-2026-09-14";
 const logoUrl = "https://cdn.awsli.com.br/436/436130/favicon/f0c196521f.png";
 
 const input = path.join(root, "assets", inputName);
@@ -252,7 +252,7 @@ const runtime = `;(()=>{
   };
 
   const fixInstagram=()=>{
-    [...document.querySelectorAll("h1,h2,h3")].filter(el=>has(el.innerText,["Feed Oficial do Instagram","Official Instagram Feed"])).forEach(el=>(el.closest("section")||el.closest("div")||el).remove());
+    [...document.querySelectorAll("h1,h2,h3")].filter(el=>has(el.innerText,["Feed Oficial do Instagram","Official Instagram Feed"])).forEach(el=>el.remove());
     [...document.querySelectorAll("p")].forEach(el=>{if(has(el.innerText,["Acompanhe nossas últimas postagens diretamente do perfil @institutocivitassolis","Follow our latest posts directly from @institutocivitassolis"]))el.remove()});
   };
   const fixYouTube=()=>{
@@ -307,6 +307,7 @@ for (const htmlPath of [path.join(root, "index.html"), path.join(root, "dist", "
 }
 
 console.log(outputName);
+
 
 
 

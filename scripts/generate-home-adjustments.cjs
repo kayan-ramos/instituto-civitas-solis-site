@@ -3,9 +3,9 @@ const path = require("path");
 
 const root = process.cwd();
 const inputName = "index-i18n-stable-8f6c2d1.js";
-const outputName = "index-icon-flicker-fix-f1e9a7.js";
-const cssOutputName = "index-icon-flicker-fix-f1e9a7.css";
-const revision = "icon-flicker-fix-3-2026-09-14";
+const outputName = "index-instagram-copy-6e2b4c.js";
+const cssOutputName = "index-instagram-copy-6e2b4c.css";
+const revision = "instagram-copy-2026-09-14";
 const logoUrl = "https://cdn.awsli.com.br/436/436130/favicon/f0c196521f.png";
 
 const input = path.join(root, "assets", inputName);
@@ -40,6 +40,13 @@ const replacements = [
     'children:"PARCERIAS"'
   ],
   [
+    "Últimas Postagens do Instagram",
+    "Instagram Civitas Solis"
+  ],
+  [
+    "Acompanhe nossa jornada diária de descobertas e reflexões sobre filosofia, cultura e espiritualidade.",
+    "Acompanhe nossa jornada diária de descobertas e reflexões sobre Arte, Espiritualidade e Ciência."
+  ],  [
     "Conteúdos sobre filosofia, cultura e espiritualidade para uma nova consciência planetária",
     "Explore nosso canal no YouTube, dedicado à disseminação de conhecimentos sobre Arte, Espiritualidade e Ciência, visando o desenvolvimento integral do ser humano."
   ],
@@ -244,13 +251,17 @@ const runtime = `;(()=>{
     [...section.querySelectorAll("p")].forEach(p=>{if(has(p.innerText,["Explore nossos conteúdos sobre filosofia, cultura e espiritualidade.","Explore our content on philosophy, culture and spirituality.","Explore nuestros contenidos sobre filosofía, cultura y espiritualidad.","Explorez nos contenus sur la philosophie, la culture et la spiritualité.","Entdecken Sie unsere Inhalte zu Philosophie, Kultur und Spiritualität.","Esplora i nostri contenuti su filosofia, cultura e spiritualità."]))p.remove()});
   };
 
+  const fixInstagram=()=>{
+    [...document.querySelectorAll("h1,h2,h3")].filter(el=>has(el.innerText,["Feed Oficial do Instagram","Official Instagram Feed"])).forEach(el=>(el.closest("section")||el.closest("div")||el).remove());
+    [...document.querySelectorAll("p")].forEach(el=>{if(has(el.innerText,["Acompanhe nossas últimas postagens diretamente do perfil @institutocivitassolis","Follow our latest posts directly from @institutocivitassolis"]))el.remove()});
+  };
   const fixYouTube=()=>{
     document.querySelectorAll(".youtube-hero h1").forEach(el=>{if(!el.classList.contains("ics-youtube-title"))el.classList.add("ics-youtube-title")});
     document.querySelectorAll(".youtube-hero p").forEach(el=>{if(!el.classList.contains("ics-youtube-subtitle"))el.classList.add("ics-youtube-subtitle")});
     document.querySelectorAll(".youtube-about").forEach(el=>el.remove());
   };
   const safe=fn=>{try{fn()}catch(error){}};
-  const apply=()=>{document.documentElement.classList.toggle("ics-route-mvv",location.pathname==="/missao-visao-valores");safe(fixValues);safe(fixMvvHero);safe(fixMissionVision);safe(ensureVideo);safe(ensureGlobal);safe(fixHomeYouTube);safe(fixYouTube)};
+  const apply=()=>{document.documentElement.classList.toggle("ics-route-mvv",location.pathname==="/missao-visao-valores");safe(fixValues);safe(fixMvvHero);safe(fixMissionVision);safe(ensureVideo);safe(ensureGlobal);safe(fixHomeYouTube);safe(fixInstagram);safe(fixYouTube)};
   const schedule=()=>{clearTimeout(window.__icsHomeAdjustTimer);window.__icsHomeAdjustTimer=setTimeout(apply,120)};
   window.__icsHomeApply=apply;
   document.addEventListener("DOMContentLoaded",schedule);
@@ -296,6 +307,7 @@ for (const htmlPath of [path.join(root, "index.html"), path.join(root, "dist", "
 }
 
 console.log(outputName);
+
 
 
 

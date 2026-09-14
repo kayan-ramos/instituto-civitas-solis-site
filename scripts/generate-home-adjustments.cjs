@@ -3,9 +3,9 @@ const path = require("path");
 
 const root = process.cwd();
 const inputName = "index-i18n-stable-8f6c2d1.js";
-const outputName = "index-youtube-copy-4a9e2c.js";
-const cssOutputName = "index-youtube-copy-4a9e2c.css";
-const revision = "youtube-copy-2026-09-14";
+const outputName = "index-youtube-about-removed-9c1d5b.js";
+const cssOutputName = "index-youtube-about-removed-9c1d5b.css";
+const revision = "youtube-about-removed-2026-09-14";
 const logoUrl = "https://cdn.awsli.com.br/436/436130/favicon/f0c196521f.png";
 
 const input = path.join(root, "assets", inputName);
@@ -239,6 +239,7 @@ const runtime = `;(()=>{
   const fixYouTube=()=>{
     document.querySelectorAll(".youtube-hero h1").forEach(el=>el.classList.add("ics-youtube-title"));
     document.querySelectorAll(".youtube-hero p").forEach(el=>el.classList.add("ics-youtube-subtitle"));
+    document.querySelectorAll(".youtube-about").forEach(el=>el.remove());
   };
   const safe=fn=>{try{fn()}catch(error){}};
   const apply=()=>{document.documentElement.classList.toggle("ics-route-mvv",isMvvPage());safe(fixValues);safe(fixMvvHero);safe(fixMissionVision);safe(ensureVideo);safe(ensureGlobal);safe(fixHomeYouTube);safe(fixYouTube)};
@@ -287,6 +288,7 @@ for (const htmlPath of [path.join(root, "index.html"), path.join(root, "dist", "
 }
 
 console.log(outputName);
+
 
 
 
